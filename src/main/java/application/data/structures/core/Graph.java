@@ -1,5 +1,7 @@
 package application.data.structures.core;
 
+import application.exceptions.CyclicGraphException;
+
 import java.nio.file.Path;
 
 public interface Graph {
@@ -14,5 +16,7 @@ public interface Graph {
      * @param fromNode Нода от которой идет ребро.
      * @param toNode Нода к которой идет ребро.
      */
-    void addEdge(Path fromNode, Path toNode);
+    void addEdge(Path fromNode, Path toNode) throws CyclicGraphException;
+
+    void sort();
 }
