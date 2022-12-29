@@ -3,10 +3,7 @@ package application.data.structures;
 import application.data.structures.core.Graph;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EdgeList implements Graph {
     private final Path rootDirectory;
@@ -18,12 +15,16 @@ public class EdgeList implements Graph {
     }
 
     @Override
-    public void addNode() {
-
+    public void addNode(Path filePath) {
+        edges.putIfAbsent(filePath, new ArrayList<Path>());
     }
 
     @Override
-    public void addEdge(Node node) {
+    public void addEdge(Path node, Path edge) {
+        if (!edges.containsKey(node)) {
+            throw new NoSuchElementException("Данный файл отсутвует в графе!");
+        }
 
+        edges.get(node).add(edge);
     }
 }
