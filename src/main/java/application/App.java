@@ -1,5 +1,6 @@
 package application;
 
+import application.constants.Errors;
 import application.constants.Menu;
 import application.data.structures.EdgeList;
 import application.data.structures.core.Graph;
@@ -22,7 +23,13 @@ public final class App {
 
     public void run() {
         Path rootDirectory = getRootDirectory();
-        if (rootDirectory.toString().equals(Menu.QUIT_COMMAND) || !FileUtils.isValidFile(rootDirectory)) {
+
+        if (rootDirectory.toString().equals(Menu.QUIT_COMMAND)) {
+            return;
+        }
+
+        if (!FileUtils.isValidDirectory(rootDirectory)) {
+            System.out.println(Errors.INCORRECT_DIRECTORY);
             return;
         }
 
