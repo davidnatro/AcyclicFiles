@@ -31,7 +31,7 @@ public class EdgeList implements Graph {
         }
 
         for (final Path keyNode : edges.keySet()) {
-            if (keyNode == edge) {
+            if (keyNode.equals(edge)) {
                 throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
             }
         }
