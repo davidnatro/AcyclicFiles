@@ -1,8 +1,8 @@
 package application.data.structures;
 
-import application.exceptions.CyclicGraphException;
 import application.constants.Errors;
 import application.data.structures.core.Graph;
+import application.exceptions.CyclicGraphException;
 import application.utils.FileUtils;
 
 import java.nio.file.Path;
@@ -15,13 +15,20 @@ public class EdgeList implements Graph {
         edges.putIfAbsent(rootDirectory, new ArrayList<Path>());
     }
 
+
+
     @Override
-    public void addNode(Path filePath) {
+    public void addNode(final Path filePath) {
         edges.putIfAbsent(filePath, new ArrayList<Path>());
     }
 
     @Override
-    public void addEdge(Path node, Path edge) throws CyclicGraphException {
+    public boolean hasCyclicDependency() {
+        return false;
+    }
+
+    @Override
+    public void addEdge(final Path node, final Path edge) throws CyclicGraphException, NoSuchElementException, IllegalArgumentException {
         if (!edges.containsKey(node)) {
             throw new NoSuchElementException(Errors.NODE_NOT_IN_GRAPH);
         }
@@ -32,6 +39,7 @@ public class EdgeList implements Graph {
 
         for (final Path keyNode : edges.keySet()) {
             if (keyNode.equals(edge)) {
+
                 throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
             }
         }

@@ -6,9 +6,6 @@ import application.data.structures.EdgeList;
 import application.data.structures.core.Graph;
 import application.utils.FileUtils;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -25,10 +22,16 @@ public final class App {
         Path rootDirectory = getRootDirectory();
 
         if (rootDirectory.toString().equals(Menu.QUIT_COMMAND)) {
+            System.out.println(Menu.QUITING);
             return;
         }
 
         if (!FileUtils.isValidDirectory(rootDirectory)) {
+            System.out.println(Errors.INCORRECT_DIRECTORY);
+            return;
+        }
+
+        if (!FileUtils.isAccessible(rootDirectory)) {
             System.out.println(Errors.INCORRECT_DIRECTORY);
             return;
         }

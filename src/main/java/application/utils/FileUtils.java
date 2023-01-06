@@ -1,5 +1,6 @@
 package application.utils;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FileUtils {
@@ -11,5 +12,9 @@ public class FileUtils {
 
     public static boolean isValidFile(final Path file) {
         return file.toFile().isFile();
+    }
+
+    public static boolean isAccessible(final Path file) {
+        return Files.isReadable(file);
     }
 }
