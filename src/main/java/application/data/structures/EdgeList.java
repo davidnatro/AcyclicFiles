@@ -25,6 +25,7 @@ public class EdgeList implements Graph {
         for (final Path keyNode : edges.keySet()) {
             if (edges.get(keyNode).contains(node)) {
                 nodes.add(keyNode);
+                nodes.addAll(getNodesParents(keyNode));
             }
         }
         return nodes;
@@ -58,11 +59,8 @@ public class EdgeList implements Graph {
             throw new IllegalArgumentException(Errors.FILE_IS_DIR_OR_NOT_FOUND);
         }
 
-        for (final Path keyNode : edges.keySet()) {
-            if (keyNode.equals(edge)) {
-
-                throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
-            }
+        if (hasCyclicDependency(edge)) {
+            throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
         }
 
         edges.get(node).add(edge);
