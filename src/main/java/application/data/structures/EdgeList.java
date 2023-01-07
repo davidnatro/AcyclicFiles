@@ -33,7 +33,7 @@ public class EdgeList implements Graph {
 
     @Override
     public boolean hasCyclicDependency(final Path edge) {
-        List<Path> parentNodes = getNodesParents(edge);
+        final List<Path> parentNodes = getNodesParents(edge);
 
         for (final Path parentNode : parentNodes) {
             if (edge.equals(parentNode)) {
