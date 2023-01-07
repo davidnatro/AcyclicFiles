@@ -66,8 +66,32 @@ public class EdgeList implements Graph {
         edges.get(node).add(edge);
     }
 
-    @Override
-    public void sort() {
+    private Map<Path, List<Path>> deepCopy() {
+        Map<Path, List<Path>> copy = new HashMap<Path, List<Path>>();
 
+        for (final Path key : edges.keySet()) {
+            List<Path> nodes = new ArrayList<Path>(edges.get(key));
+            copy.put(key, nodes);
+        }
+
+        return copy;
+    }
+
+    @Override
+    public List<Path> sortedList() {
+        // Топологическая сортировка с использование алгоритма Кана.
+
+        Map<Path, List<Path>> copy = deepCopy();
+        List<Path> sortedList = new ArrayList<Path>();
+
+        for (final Path key : edges.keySet()) {
+            sortedList.add(key);
+            sortedList.addAll(copy.get(key));
+        }
+
+        // если файл А, зависит от файла В, то файл А находится ниже файла В в списке.
+        Collections.reverse(sortedList);
+
+        return sortedList;
     }
 }

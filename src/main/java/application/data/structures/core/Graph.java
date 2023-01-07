@@ -3,6 +3,7 @@ package application.data.structures.core;
 import application.exceptions.CyclicGraphException;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public interface Graph {
     /**
@@ -25,5 +26,9 @@ public interface Graph {
      */
     void addEdge(final Path fromNode, final Path toNode) throws CyclicGraphException;
 
-    void sort();
+    /**
+     * Сортиврока графа.
+     * @return Отсортированный граф в виде списка.
+     */
+    List<Path> sortedList();
 }
