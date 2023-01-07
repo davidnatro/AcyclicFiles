@@ -36,6 +36,6 @@ public final class App {
             return;
         }
 
-        Graph edgeList = new EdgeList(rootDirectory);
+        Graph edgeList = new EdgeList();
     }
 }

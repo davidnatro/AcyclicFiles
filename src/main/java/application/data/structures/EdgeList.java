@@ -11,10 +11,6 @@ import java.util.*;
 public class EdgeList implements Graph {
     private final Map<Path, List<Path>> edges = new HashMap<Path, List<Path>>();
 
-    public EdgeList(final Path rootDirectory) {
-        edges.putIfAbsent(rootDirectory, new ArrayList<Path>());
-    }
-
     /**
      * Получение всех родительских нод (пути) определенной ноды.
      * @param node Нода.
