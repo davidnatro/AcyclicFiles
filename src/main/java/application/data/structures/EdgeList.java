@@ -55,7 +55,7 @@ public class EdgeList implements Graph {
             throw new IllegalArgumentException(Errors.FILE_IS_DIR_OR_NOT_FOUND);
         }
 
-        if (hasCyclicDependency(edge)) {
+        if (hasCyclicDependency(edge) || edge.equals(node)) {
             throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
         }
 

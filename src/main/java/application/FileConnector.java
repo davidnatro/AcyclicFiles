@@ -5,6 +5,7 @@ import application.constants.Errors;
 import application.constants.Menu;
 import application.data.structures.EdgeList;
 import application.exceptions.CyclicGraphException;
+import application.utils.FileUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -17,7 +18,6 @@ public class FileConnector {
 
     public FileConnector(final Path rootDirectory) {
         edgeList = new EdgeList();
-        edgeList.addNode(rootDirectory);
 
         this.rootDirectory = rootDirectory;
     }
@@ -28,14 +28,24 @@ public class FileConnector {
 
     private void printSortedList(final List<Path> sortedList) throws IOException {
         for (final Path file : sortedList) {
-            System.out.println(Files.readAllLines(file));
+            if (!file.getFileName().equals(Path.of(".DS_Store"))) {
+                System.out.println(Files.readAllLines(file));
+            }
         }
     }
 
-    public void scan() {
+    public void start() {
         File[] rootFiles = rootDirectory.toFile().listFiles();
 
+        if (rootFiles == null) {
+            return;
+        }
+
         for (final File file : rootFiles) {
+            if (file.isDirectory()) {
+                continue;
+            }
+
             edgeList.addNode(file.toPath());
 
             try {
@@ -44,10 +54,12 @@ public class FileConnector {
 
                 while ((input = reader.readLine()) != null) {
                     String[] words = input.split(" ");
-                    if (words[0].equals(Commands.REQUIRE)) {
-                        edgeList.addEdge(file.toPath(), parseRequire(words[1]));
+                    if (words.length > 1 && words[0].equals(Commands.REQUIRE)) {
+                        edgeList.addEdge(file.toPath(), parseRequire(rootDirectory + "/" + words[1].substring(1, words[1].length() - 1) + ".txt"));
                     }
                 }
+
+                // Archive/BasicCycle
 
             } catch (final FileNotFoundException exception) {
                 System.out.println(Errors.FILE_IS_DIR_OR_NOT_FOUND);

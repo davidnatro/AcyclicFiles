@@ -36,6 +36,7 @@ public final class App {
             return;
         }
 
-        Graph edgeList = new EdgeList();
+        FileConnector fileConnector = new FileConnector(rootDirectory);
+        fileConnector.start();
     }
 }
