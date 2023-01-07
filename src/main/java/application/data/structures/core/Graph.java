@@ -6,10 +6,11 @@ import java.nio.file.Path;
 
 public interface Graph {
     /**
-     * Проверка графа на наличие циклов.
-     * @return true, если в графе есть цикл, иначе false.
+     * Проверка ноды на циклическую зависимость.
+     * @param node Нода.
+     * @return true, если есть циклическая зависимость, иначе false.
      */
-    boolean hasCyclicDependency();
+    boolean hasCyclicDependency(final Path node);
 
     /**
      * Добавляет ноду в граф.

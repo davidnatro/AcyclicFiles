@@ -15,16 +15,37 @@ public class EdgeList implements Graph {
         edges.putIfAbsent(rootDirectory, new ArrayList<Path>());
     }
 
+    /**
+     * Получение всех родительских нод (пути) определенной ноды.
+     * @param node Нода.
+     * @return Список родитесльких нод.
+     */
+    private List<Path> getNodesParents(final Path node) {
+        List<Path> nodes = new ArrayList<Path>();
+        for (final Path keyNode : edges.keySet()) {
+            if (edges.get(keyNode).contains(node)) {
+                nodes.add(keyNode);
+            }
+        }
+        return nodes;
+    }
 
+    @Override
+    public boolean hasCyclicDependency(final Path edge) {
+        List<Path> parentNodes = getNodesParents(edge);
+
+        for (final Path parentNode : parentNodes) {
+            if (edge.equals(parentNode)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     @Override
     public void addNode(final Path filePath) {
         edges.putIfAbsent(filePath, new ArrayList<Path>());
-    }
-
-    @Override
-    public boolean hasCyclicDependency() {
-        return false;
     }
 
     @Override
