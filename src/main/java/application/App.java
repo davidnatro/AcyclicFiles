@@ -2,8 +2,6 @@ package application;
 
 import application.constants.Errors;
 import application.constants.Menu;
-import application.data.structures.EdgeList;
-import application.data.structures.core.Graph;
 import application.utils.FileUtils;
 
 import java.nio.file.Path;

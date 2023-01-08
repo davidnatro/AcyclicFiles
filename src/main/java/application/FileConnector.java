@@ -2,10 +2,8 @@ package application;
 
 import application.constants.Commands;
 import application.constants.Errors;
-import application.constants.Menu;
 import application.data.structures.EdgeList;
 import application.exceptions.CyclicGraphException;
-import application.utils.FileUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -49,17 +47,17 @@ public class FileConnector {
             edgeList.addNode(file.toPath());
 
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
+                final BufferedReader reader = new BufferedReader(new FileReader(file));
                 String input = null;
 
                 while ((input = reader.readLine()) != null) {
-                    String[] words = input.split(" ");
+                    final String[] words = input.split("'");
                     if (words.length > 1 && words[0].equals(Commands.REQUIRE)) {
-                        edgeList.addEdge(file.toPath(), parseRequire(rootDirectory + "/" + words[1].substring(1, words[1].length() - 1) + ".txt"));
+                        edgeList.addEdge(file.toPath(), parseRequire(rootDirectory + File.separator + words[1].substring(1, words[1].length() - 1) + ".txt"));
                     }
                 }
 
-                // Archive/BasicCycle
+                // Archive/BasicExample
 
             } catch (final FileNotFoundException exception) {
                 System.out.println(Errors.FILE_IS_DIR_OR_NOT_FOUND);

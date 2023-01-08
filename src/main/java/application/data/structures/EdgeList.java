@@ -21,7 +21,6 @@ public class EdgeList implements Graph {
         for (final Path keyNode : edges.keySet()) {
             if (edges.get(keyNode).contains(node)) {
                 nodes.add(keyNode);
-                nodes.addAll(getNodesParents(keyNode));
             }
         }
         return nodes;
@@ -32,7 +31,7 @@ public class EdgeList implements Graph {
         final List<Path> parentNodes = getNodesParents(edge);
 
         for (final Path parentNode : parentNodes) {
-            if (edge.equals(parentNode)) {
+            if (edges.containsKey(edge) && edges.get(edge).contains(parentNode)) {
                 return true;
             }
         }
@@ -55,11 +54,11 @@ public class EdgeList implements Graph {
             throw new IllegalArgumentException(Errors.FILE_IS_DIR_OR_NOT_FOUND);
         }
 
+        edges.get(node).add(edge);
+
         if (hasCyclicDependency(edge) || edge.equals(node)) {
             throw new CyclicGraphException(Errors.CYCLIC_GRAPH);
         }
-
-        edges.get(node).add(edge);
     }
 
     private Map<Path, List<Path>> deepCopy() {
