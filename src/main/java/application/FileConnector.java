@@ -32,6 +32,9 @@ public class FileConnector {
         }
     }
 
+    /**
+     * Запуск сканирования корневой директории.
+     */
     public void start() {
         File[] rootFiles = rootDirectory.toFile().listFiles();
 
@@ -53,7 +56,7 @@ public class FileConnector {
                 while ((input = reader.readLine()) != null) {
                     final String[] words = input.split("'");
                     if (words.length > 1 && words[0].equals(Commands.REQUIRE)) {
-                        edgeList.addEdge(file.toPath(), parseRequire(rootDirectory + File.separator + words[1].substring(1, words[1].length() - 1) + ".txt"));
+                        edgeList.addEdge(file.toPath(), parseRequire(rootDirectory + File.separator + words[1] + ".txt"));
                     }
                 }
 
